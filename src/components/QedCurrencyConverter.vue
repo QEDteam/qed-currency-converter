@@ -131,6 +131,8 @@
 
 <script>
 
+import axios from 'axios'
+
 export default {
     
     props: {
@@ -153,6 +155,11 @@ export default {
             rate: 1.5,
 
             currencies: [],
+
+            route: null,
+            headers: {
+                headers: {'X-Requested-With': 'XMLHttpRequest'}
+            }
         }
     },
 
@@ -160,6 +167,7 @@ export default {
         this.currencies = this.config.currencies ? this.config.currencies : [];
         this.fromCurreny = this.currencies.length > 0 ? this.currencies[0] : {};
         this.toCurreny = this.currencies.length > 0 ? this.currencies[0] : {};
+        this.route = this.config.route;
     },
 
     watch: {
@@ -235,7 +243,19 @@ export default {
          */
         getRate() {
             this.fromAmount = null;
-            this.rate = Math.floor(Math.random() * Math.floor(3));
+
+            axios.get(`${this.route}?from=${this.fromCurreny.iso}&to=${this.toCurreny.iso}`, this.headers)
+                .then(
+                    (response) => {
+                        this.rate = response.data.rate;
+                    }
+                )
+                .catch(
+                    (error) => {
+                        console.log('Currency rate route not valid');
+                        this.rate = 1;
+                    }
+                );
         }
     },
 }

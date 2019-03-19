@@ -1,6 +1,7 @@
 {
-  "name": "qed-currency-converter",
-  "version": "1.0.0",
+  "homepage": "https://github.com/QEDteam/qed-currency-converter#readme"
+  "name": "qed-currencies-converter",
+  "version": "1.0.2",
   "description": "Simple currency converting component",
   "main": "src/main.js",
   "scripts": {
@@ -15,6 +16,7 @@
   "author": "Edo Kanizic",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
     "vue": "^2.6.9"
   },
   "devDependencies": {
@@ -35,3 +37,4 @@
     "webpack-dev-server": "^3.2.1"
   }
 }
+
