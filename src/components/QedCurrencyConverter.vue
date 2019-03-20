@@ -94,7 +94,8 @@ export default {
         fromAmount(val) {
             let res = val * this.rate;
             if (isNaN(res)) {
-                this.toAmount = null;
+                Vue.set(this, 'toAmount', null, true)
+                return;
             }
 
             Vue.set(this, 'toAmount', res.toFixed(2), true)
