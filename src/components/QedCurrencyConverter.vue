@@ -81,10 +81,10 @@ export default {
     },
 
     mounted() {
+        this.route = this.config.route ? this.config.route : null;
         this.currencies = this.config.currencies ? this.config.currencies : [];
         this.fromCurreny = this.currencies.length > 0 ? this.currencies[0] : {};
         this.toCurreny = this.currencies.length > 0 ? this.currencies[0] : {};
-        this.route = this.config.route;
     },
 
     watch: {
@@ -161,6 +161,13 @@ export default {
         getRate() {
             this.fromAmount = null;
 
+            // Return with default rate if route is not provided
+            if (this.route == null || this.route == '') {
+                this.rate = 1;
+                return;
+            }
+
+            // Get rate
             axios.get(`${this.route}?from=${this.fromCurreny.iso}&to=${this.toCurreny.iso}`, this.headers)
                 .then(
                     (response) => {
@@ -169,7 +176,6 @@ export default {
                 )
                 .catch(
                     (error) => {
-                        console.log('Currency rate route not valid');
                         this.rate = 1;
                     }
                 );
