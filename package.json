@@ -1,7 +1,7 @@
 {
   "homepage": "https://github.com/QEDteam/qed-currency-converter#readme",
   "name": "qed-currencies-converter",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simple currency converting component",
   "main": "src/main.js",
   "scripts": {

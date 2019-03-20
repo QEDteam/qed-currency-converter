@@ -1,0 +1,89 @@
+.qed-currency-converter {
+    width:100%;
+}
+.qed-currency-converter > .container {
+    display:flex;
+    position:relative;
+}
+
+.qed-currency-converter .currency-input {
+    width:100%;
+    text-align:center;
+    outline:0;
+    border-width:0 0 1px;
+    border-color:#313740;
+    background:transparent;
+    color:#fff;
+}
+.qed-currency-converter .currency-input:focus {
+    border-color:#80d3d3;
+}
+
+.qed-currency-converter .currency-from {
+    position:relative;
+    display:inline-block;
+}
+
+.qed-currency-converter .currency-to {
+    position:relative;
+    display:inline-block;
+}
+
+.qed-currency-converter .icon-to {
+    cursor:pointer;
+    display:inline-block;
+    text-align:center;
+}
+
+.qed-currency-converter .icon-to:hover span {
+    color:#80d3d3;
+}
+
+.qed-currency-converter .icon-from {
+    cursor:pointer;
+    display:inline-block;
+    text-align:center;
+}
+
+.qed-currency-converter .icon-from:hover span {
+    color:#80d3d3;
+}
+
+.qed-currency-converter .dropdown-currency {
+    width:60px !important;
+}
+
+.qed-currency-converter .dropdown-currency a {
+    padding:5px !important;
+    text-align:center !important;
+}
+
+.qed-currency-converter .dropdown-currency {
+    position: absolute;
+    z-index: 1000;
+    top: 100%;
+    min-width:100%;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 13px;
+    text-align: left;
+    background-color: #1A1A1A;
+    border: 1px solid #ccc;
+    border: 1px solid #262626;
+    border-radius: 2px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box; 
+}
+.qed-currency-converter .dropdown-currency > li > a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.52857;
+    color: white;
+    white-space: nowrap; 
+}
+.qed-currency-converter .dropdown-currency > li:hover {
+    background-color: #333;
+}

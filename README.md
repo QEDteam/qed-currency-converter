@@ -12,7 +12,8 @@ Import component
 
 ```javascript
     import QedCurrencyConverter from 'qed-currencies-converter'
-    
+    import 'qed-currencies-converter/dist/qed-currency-converter-style.css'
+
     const app = new Vue({
         components: {
             QedCurrencyConverter,
