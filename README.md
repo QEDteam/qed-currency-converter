@@ -32,6 +32,9 @@ Config Example
 const config = {
     // Application route which needs to return json with rate value ex. { rate: 1.8 }
     route:'/api/currencies/rate',
+
+    // Whether rate will be displayed (true/false)
+    displayRate:true,
     
     // Currency list, iso name is sent to previously defined route ex ${route}?from="eur"&to="usd"
     currencies: [

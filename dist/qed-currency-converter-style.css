@@ -6,6 +6,14 @@
     position:relative;
 }
 
+.qed-currency-converter > .rate-display {
+    position:relative;
+}
+.qed-currency-converter > .rate-num {
+    text-align:center;
+    font-size:26px;
+}
+
 .qed-currency-converter .currency-input {
     width:100%;
     text-align:center;

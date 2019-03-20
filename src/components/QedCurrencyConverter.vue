@@ -43,6 +43,12 @@
                 </ul>
             </div>
         </div>
+
+        <div class="rate-display" v-if="displayRate">
+            <p class="rate-num">
+                {{ formatNumberDisplay(rate) }}
+            </p>
+        </div>
     </div>
 </template>
 
@@ -62,26 +68,23 @@ export default {
         return {
             toggleFrom: false,
             toggleTo: false,
-
             fromAmount: null,
             toAmount: null,
-
             fromCurreny: {},
             toCurreny: {},
-            
-            rate: 1.5,
-
+            rate: 1,
             currencies: [],
-
             route: null,
             headers: {
                 headers: {'X-Requested-With': 'XMLHttpRequest'}
-            }
+            },
+            displayRate: false,
         }
     },
 
     mounted() {
         this.route = this.config.route ? this.config.route : null;
+        this.displayRate = this.config.displayRate;
         this.currencies = this.config.currencies ? this.config.currencies : [];
         this.fromCurreny = this.currencies.length > 0 ? this.currencies[0] : {};
         this.toCurreny = this.currencies.length > 0 ? this.currencies[0] : {};
@@ -180,7 +183,18 @@ export default {
                         this.rate = 1;
                     }
                 );
-        }
+        },
+
+        /**
+         * Format rate display
+         */
+        formatNumberDisplay(value = null) {
+            if (_.isNull(value)) {
+                return '-';
+            }
+            let val = (value/1).toFixed(2).replace(',', '.');
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        },
     },
 }
 
