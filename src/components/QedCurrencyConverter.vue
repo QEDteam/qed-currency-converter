@@ -92,11 +92,11 @@ export default {
          * On change, recalculate 'toAmount' 
          */
         fromAmount(val) {
-            if(val == null || val == '') {
+            let res = val * this.rate;
+            if (isNaN(res)) {
                 this.toAmount = null;
             }
-            
-            let res = val * this.rate;
+
             Vue.set(this, 'toAmount', res.toFixed(2), true)
         },
 
