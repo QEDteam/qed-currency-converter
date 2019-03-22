@@ -54,10 +54,10 @@
 
 <script>
 
+import _Vue from 'vue';
 import axios from 'axios'
 
 export default {
-    
     props: {
         config: {
             required: true,
@@ -81,7 +81,10 @@ export default {
             displayRate: false,
         }
     },
-
+    
+    /**
+     * Setup
+     */
     mounted() {
         this.route = this.config.route ? this.config.route : null;
         this.displayRate = this.config.displayRate;
@@ -97,11 +100,11 @@ export default {
         fromAmount(val) {
             let res = val * this.rate;
             if (isNaN(res)) {
-                Vue.set(this, 'toAmount', null, true)
+                _Vue.set(this, 'toAmount', null, true)
                 return;
             }
 
-            Vue.set(this, 'toAmount', res.toFixed(2), true)
+            _Vue.set(this, 'toAmount', res.toFixed(2), true)
         },
 
         /**
@@ -126,7 +129,6 @@ export default {
     },
 
     methods: {
-
         /**
          * Opens and closes dropdown with 'from currencies'
          */
