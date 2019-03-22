@@ -5,6 +5,9 @@
 ```bash
 npm i --save qed-currencies-converter
 ```
+## Preview
+
+![Component Preview](https://github.com/QEDteam/qed-currency-converter/tree/master/dist/converter.png)
 
 ## Usage
 
