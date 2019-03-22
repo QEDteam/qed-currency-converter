@@ -7,7 +7,7 @@ npm i --save qed-currencies-converter
 ```
 ## Preview
 
-![Component Preview](https://github.com/QEDteam/qed-currency-converter/tree/master/dist/converter.png)
+![Component Preview](https://raw.githubusercontent.com/QEDteam/qed-currency-converter/master/dist/converter.png)
 
 ## Usage
 
