@@ -15,8 +15,12 @@
             <div class="currency-from" style="flex-grow:3">
                 <input type="text" class="currency-input" placeholder="0.00" v-model="fromAmount">
                 
-                <ul class="dropdown-currency" style="position: absolute; top:100%; left: 0px;" v-show="toggleFrom">
-                    <li v-for="(currency, index) in currencies" v-bind:key="index" @click="setFromCurrency(currency)">
+                <ul :class="toggleFrom == true ? 'dropdown-currency' : 'dropdown-currency hidden'">
+
+                    <li v-for="(currency, index) in currencies"
+                        :class="(currency.iso === fromCurreny.iso) ? 'selected' : ''" 
+                        v-bind:key="index" 
+                        @click="setFromCurrency(currency)">
                         <a href="javascript:void(0);">{{ currency.symbol }}</a>
                     </li>
                 </ul>
@@ -36,17 +40,23 @@
             <div class="currency-to" style="flex-grow:3">
                 <input type="text" class="currency-input" placeholder="0.00" v-model="toAmount" disabled>
 
-                <ul class="dropdown-currency" style="position: absolute; top:100%; left: 0px;" v-show="toggleTo">
-                    <li v-for="(currency, index) in currencies" v-bind:key="index" @click="setToCurrency(currency)">
+                <ul :class="toggleTo == true ? 'dropdown-currency' : 'dropdown-currency hidden'">
+                    <li v-for="(currency, index) in currencies" 
+                        :class="(currency.iso === toCurreny.iso) ? 'selected' : ''"
+                        v-bind:key="index" 
+                        @click="setToCurrency(currency)">
                         <a href="javascript:void(0);">{{ currency.symbol }}</a>
                     </li>
                 </ul>
             </div>
         </div>
-
+        
         <div class="rate-display" v-if="displayRate">
             <p class="rate-num">
-                {{ formatNumberDisplay(rate) }}
+                Conversion Rate: {{ formatNumberDisplay(rate) }}
+            </p>
+            <p class="rate-text">
+                {{ formatNumberDisplay(fromAmount ? fromAmount : 0) }} {{ fromCurreny.iso }} equals {{ formatNumberDisplay(toAmount ? toAmount : 0) }} {{ toCurreny.iso }} 
             </p>
         </div>
     </div>
@@ -58,6 +68,7 @@ import _Vue from 'vue';
 import axios from 'axios'
 
 export default {
+    
     props: {
         config: {
             required: true,
@@ -81,10 +92,7 @@ export default {
             displayRate: false,
         }
     },
-    
-    /**
-     * Setup
-     */
+
     mounted() {
         this.route = this.config.route ? this.config.route : null;
         this.displayRate = this.config.displayRate;
@@ -129,6 +137,7 @@ export default {
     },
 
     methods: {
+
         /**
          * Opens and closes dropdown with 'from currencies'
          */
@@ -169,6 +178,12 @@ export default {
 
             // Return with default rate if route is not provided
             if (this.route == null || this.route == '') {
+
+                 if (this.config.backupRateFunction != null && typeof this.config.backupRateFunction === 'function') {
+                    this.rate = this.config.backupRateFunction();
+                    return;
+                 }
+
                 this.rate = 1;
                 return;
             }
@@ -182,6 +197,10 @@ export default {
                 )
                 .catch(
                     (error) => {
+                        if (this.config.backupRateFunction != null && typeof this.config.backupRateFunction === 'function') {
+                            this.rate = this.config.backupRateFunction();
+                            return;
+                        }
                         this.rate = 1;
                     }
                 );
@@ -191,7 +210,7 @@ export default {
          * Format rate display
          */
         formatNumberDisplay(value = null) {
-            if (_.isNull(value)) {
+            if (value == null) {
                 return '-';
             }
             let val = (value/1).toFixed(2).replace(',', '.');
