@@ -5,9 +5,20 @@
 ```bash
 npm i --save qed-currencies-converter
 ```
-## Preview
+## Preview (style-1)
 
 ![Component Preview](https://raw.githubusercontent.com/QEDteam/qed-currency-converter/master/dist/converter.png)
+```javascript
+    import QedCurrencyConverter from 'qed-currencies-converter'
+    import 'qed-currencies-converter/dist/qed-currency-converter-style.css'
+```
+## Preview (style-2)
+
+![Component Preview](https://raw.githubusercontent.com/QEDteam/qed-currency-converter/master/dist/converter2.png)
+```javascript
+    import QedCurrencyConverter from 'qed-currencies-converter'
+    import 'qed-currencies-converter/dist/qed-currency-converter-style-2.css'
+```
 
 ## Usage
 
@@ -49,7 +60,17 @@ const config = {
             symbol: '€',
             iso: 'eur'
         }
-    ]
+    ],
+
+    // Simple backup function if you do not want to use live rates, or in case your currency rate provider goes offline 
+    backupRateFunction(from, to) {
+        if (from.iso == 'EUR' && from.iso == 'USD') {
+            return 1.12;
+        }
+        // else if () ....... 
+         
+        return 1;
+    }
 }
 ```
 
