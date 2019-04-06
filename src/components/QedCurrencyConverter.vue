@@ -180,7 +180,7 @@ export default {
             if (this.route == null || this.route == '') {
 
                  if (this.config.backupRateFunction != null && typeof this.config.backupRateFunction === 'function') {
-                    this.rate = this.config.backupRateFunction();
+                    this.rate = this.config.backupRateFunction(this.fromCurreny, this.toCurreny);
                     return;
                  }
 
@@ -198,7 +198,7 @@ export default {
                 .catch(
                     (error) => {
                         if (this.config.backupRateFunction != null && typeof this.config.backupRateFunction === 'function') {
-                            this.rate = this.config.backupRateFunction();
+                            this.rate = this.config.backupRateFunction(this.fromCurreny, this.toCurreny);
                             return;
                         }
                         this.rate = 1;
