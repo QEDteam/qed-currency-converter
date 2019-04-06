@@ -1,0 +1,122 @@
+.qed-currency-converter {
+    width:100%;
+    border:1px solid #777;
+    border-radius: 10px;
+}
+.qed-currency-converter > .container {
+    display:flex;
+    position:relative;
+    padding:15px 5px 40px 5px;
+}
+
+.qed-currency-converter > .rate-display {
+    position:relative;
+}
+.qed-currency-converter .rate-num {
+    text-align:center;
+    font-size:16px;
+    margin:4px 0;
+}
+
+.qed-currency-converter .rate-text {
+    text-align:center;
+    font-size:12px;
+    margin:4px 0 15px 0;
+}
+
+.qed-currency-converter .currency-input {
+    width:100%;
+    text-align:center;
+    outline:0;
+    font-size: 20px;
+    border-width:0 0 1px;
+    border-color:#777;
+    background:transparent;
+    color:#777;
+}
+.qed-currency-converter .currency-input:focus {
+    border-color:#2788cc;
+}
+
+.qed-currency-converter .currency-from {
+    position:relative;
+    display:inline-block;
+    margin-right: 4px;
+}
+
+.qed-currency-converter .currency-to {
+    position:relative;
+    display:inline-block;
+    margin-left: 4px;
+}
+
+.qed-currency-converter .icon-to {
+    display:none !important;
+    cursor:pointer;
+    display:inline-block;
+    text-align:center;
+}
+
+.qed-currency-converter .icon-to:hover span {
+    color:#2788cc;
+}
+
+.qed-currency-converter .icon-from {
+    display:none !important;
+    cursor:pointer;
+    display:inline-block;
+    text-align:center;
+}
+
+.qed-currency-converter .icon-from:hover span {
+    color:#2788cc;
+}
+
+.qed-currency-converter .dropdown-currency {
+    width:60px !important;
+}
+
+.qed-currency-converter .dropdown-currency a {
+    padding:5px !important;
+    text-align:center !important;
+}
+
+.qed-currency-converter .dropdown-currency {
+    top:100%; 
+    left: 0px;
+    position: absolute;
+    z-index: 1000;
+    top: 100%;
+    min-width:100%;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 13px;
+    text-align: left;
+}
+
+.qed-currency-converter .dropdown-currency > li {
+    display: inline-block;
+    padding: 3px;
+    clear: both;
+    line-height: 1.52857;
+    color: #777;
+    white-space: nowrap;
+    text-decoration: none;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+    margin:0 5px 2px 0;
+}
+.qed-currency-converter .dropdown-currency > li.selected {
+    box-shadow: 0 6px 12px rgba(39,136,204, 0.6);
+}
+.qed-currency-converter .dropdown-currency > li > a {
+      text-decoration: none;
+      color: #777;
+      font-weight: 400;
+      font-size: 12px;
+}
+.qed-currency-converter .dropdown-currency > li:hover {
+    box-shadow: 0 6px 12px rgba(39,136,204, 0.6);
+}
