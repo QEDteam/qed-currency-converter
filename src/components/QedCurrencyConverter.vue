@@ -4,7 +4,7 @@
             <!-- From-Currency dropdown toggle -->
             <div class="icon-from" style="flex-grow:1" @click="toggleFromDropdown()">
                 <span v-show="!toggleFrom">
-                    {{ fromCurreny.symbol }}
+                    {{ fromCurrency.symbol }}
                 </span>
                 <span v-show="toggleFrom">
                     <i class="fa fa-angle-down"></i>
@@ -18,7 +18,7 @@
                 <ul :class="toggleFrom == true ? 'dropdown-currency' : 'dropdown-currency hidden'">
 
                     <li v-for="(currency, index) in currencies"
-                        :class="(currency.iso === fromCurreny.iso) ? 'selected' : ''" 
+                        :class="(currency.iso === fromCurrency.iso) ? 'selected' : ''" 
                         v-bind:key="index" 
                         @click="setFromCurrency(currency)">
                         <a href="javascript:void(0);">{{ currency.symbol }}</a>
@@ -29,7 +29,7 @@
             <!-- To-Currency dropdown toggle -->
             <div class="icon-to" style="flex-grow:1" @click="toggleToDropdown()">
                 <span v-show="!toggleTo">
-                    {{ toCurreny.symbol }}
+                    {{ toCurrency.symbol }}
                 </span>
                 <span v-show="toggleTo">
                     <i class="fa fa-angle-down"></i>
@@ -42,7 +42,7 @@
 
                 <ul :class="toggleTo == true ? 'dropdown-currency' : 'dropdown-currency hidden'">
                     <li v-for="(currency, index) in currencies" 
-                        :class="(currency.iso === toCurreny.iso) ? 'selected' : ''"
+                        :class="(currency.iso === toCurrency.iso) ? 'selected' : ''"
                         v-bind:key="index" 
                         @click="setToCurrency(currency)">
                         <a href="javascript:void(0);">{{ currency.symbol }}</a>
@@ -56,7 +56,7 @@
                 Conversion Rate: {{ formatNumberDisplay(rate) }}
             </p>
             <p class="rate-text">
-                {{ formatNumberDisplay(fromAmount ? fromAmount : 0) }} {{ fromCurreny.iso }} equals {{ formatNumberDisplay(toAmount ? toAmount : 0) }} {{ toCurreny.iso }} 
+                {{ formatNumberDisplay(fromAmount ? fromAmount : 0) }} {{ fromCurrency.iso }} equals {{ formatNumberDisplay(toAmount ? toAmount : 0) }} {{ toCurrency.iso }} 
             </p>
         </div>
     </div>
@@ -81,8 +81,8 @@ export default {
             toggleTo: false,
             fromAmount: null,
             toAmount: null,
-            fromCurreny: {},
-            toCurreny: {},
+            fromCurrency: {},
+            toCurrency: {},
             rate: 1,
             currencies: [],
             route: null,
@@ -97,8 +97,8 @@ export default {
         this.route = this.config.route ? this.config.route : null;
         this.displayRate = this.config.displayRate;
         this.currencies = this.config.currencies ? this.config.currencies : [];
-        this.fromCurreny = this.currencies.length > 0 ? this.currencies[0] : {};
-        this.toCurreny = this.currencies.length > 0 ? this.currencies[0] : {};
+        this.fromCurrency = this.currencies.length > 0 ? this.currencies[0] : {};
+        this.toCurrency = this.currencies.length > 0 ? this.currencies[0] : {};
     },
 
     watch: {
@@ -118,7 +118,7 @@ export default {
         /**
          * Deep watch from currency, on change get new rate
          */
-        fromCurreny: {
+        fromCurrency: {
             handler: function (val, oldVal) {
                 this.getRate();
             },
@@ -128,7 +128,7 @@ export default {
         /**
          * Deep watch to currency, on change get new rate
          */
-        toCurreny: {
+        toCurrency: {
             handler: function (val, oldVal) {
                 this.getRate();
             },
@@ -158,7 +158,7 @@ export default {
          * Set 'To-Currency'
          */
         setToCurrency(currency) {
-            this.toCurreny = currency;
+            this.toCurrency = currency;
             this.toggleToDropdown();
         },
 
@@ -166,7 +166,7 @@ export default {
          * Set 'From-Currency'
          */
         setFromCurrency(currency) {
-            this.fromCurreny = currency;
+            this.fromCurrency = currency;
             this.toggleFromDropdown();
         },
 
@@ -178,18 +178,11 @@ export default {
 
             // Return with default rate if route is not provided
             if (this.route == null || this.route == '') {
-
-                 if (this.config.backupRateFunction != null && typeof this.config.backupRateFunction === 'function') {
-                    this.rate = this.config.backupRateFunction(this.fromCurreny, this.toCurreny);
-                    return;
-                 }
-
-                this.rate = 1;
-                return;
+                this.rate = this.getBackupRate();
             }
 
-            // Get rate
-            axios.get(`${this.route}?from=${this.fromCurreny.iso}&to=${this.toCurreny.iso}`, this.headers)
+            // Get rate from provided route
+            axios.get(`${this.route}?from=${this.fromCurrency.iso}&to=${this.toCurrency.iso}`, this.headers)
                 .then(
                     (response) => {
                         this.rate = response.data.rate;
@@ -197,13 +190,21 @@ export default {
                 )
                 .catch(
                     (error) => {
-                        if (this.config.backupRateFunction != null && typeof this.config.backupRateFunction === 'function') {
-                            this.rate = this.config.backupRateFunction(this.fromCurreny, this.toCurreny);
-                            return;
-                        }
-                        this.rate = 1;
+                        this.rate = this.getBackupRate();
                     }
                 );
+        },
+
+        /**
+         * Get rate from backup function
+         */
+        getBackupRate() {
+            // Set rate from backup func
+            if (this.config.backupRateFunction != null && typeof this.config.backupRateFunction === 'function') {
+                return this.config.backupRateFunction(this.fromCurrency, this.toCurrency);;
+            }
+
+            return 1;
         },
 
         /**
