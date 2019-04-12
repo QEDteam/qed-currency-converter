@@ -45,6 +45,7 @@ Config Example
 ```javascript
 const config = {
     // Application route which needs to return json with rate value ex. { rate: 1.8 }
+    // If not provided, default exchange service will be used
     route:'/api/currencies/rate',
 
     // Whether rate will be displayed (true/false)

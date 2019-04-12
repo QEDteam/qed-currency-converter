@@ -178,7 +178,8 @@ export default {
 
             // Return with default rate if route is not provided
             if (this.route == null || this.route == '') {
-                this.rate = this.getBackupRate();
+                this.defaultRateExchangeService();
+                return;
             }
 
             // Get rate from provided route
@@ -190,13 +191,33 @@ export default {
                 )
                 .catch(
                     (error) => {
-                        this.rate = this.getBackupRate();
+                        this.defaultRateExchangeService();
+                        return;
                     }
                 );
         },
 
         /**
+         * Default exchange rate service provider
+         */
+        defaultRateExchangeService() {
+            // Get rate
+            axios.get(`https://exchange.qed.services/api-v1/get-rate?from=${this.fromCurreny.iso}&to=${this.toCurreny.iso}&api_key=dc7a8020-5d3b-11e9-b9d8-ab0b41a9f1c7`)
+                .then(
+                    (response) => {
+                        this.rate = response.data.rate;
+                    }
+                )
+                .catch(
+                    (error) => {
+                        this.rate = this.getBackupRate();
+                    }
+                );
+        }, 
+
+        /**
          * Get rate from backup function
+         * 
          */
         getBackupRate() {
             // Set rate from backup func
