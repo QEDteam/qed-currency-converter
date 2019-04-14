@@ -202,7 +202,7 @@ export default {
          */
         defaultRateExchangeService() {
             // Get rate
-            axios.get(`https://exchange.qed.services/api-v1/get-rate?from=${this.fromCurreny.iso}&to=${this.toCurreny.iso}&api_key=dc7a8020-5d3b-11e9-b9d8-ab0b41a9f1c7`)
+            axios.get(`https://exchange.qed.services/api-v1/get-rate?from=${this.fromCurrency.iso}&to=${this.toCurrency.iso}&api_key=dc7a8020-5d3b-11e9-b9d8-ab0b41a9f1c7`)
                 .then(
                     (response) => {
                         this.rate = response.data.rate;
