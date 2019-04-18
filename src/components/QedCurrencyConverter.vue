@@ -90,7 +90,7 @@ export default {
                 headers: {'X-Requested-With': 'XMLHttpRequest'}
             },
             displayRate: false,
-            apiKey: null;
+            apiKey: null
         }
     },
 
