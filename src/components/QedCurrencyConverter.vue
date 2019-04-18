@@ -90,11 +90,13 @@ export default {
                 headers: {'X-Requested-With': 'XMLHttpRequest'}
             },
             displayRate: false,
+            apiKey: null;
         }
     },
 
     mounted() {
         this.route = this.config.route ? this.config.route : null;
+        this.apiKey = this.config.apiKey ? this.config.apiKey : null;
         this.displayRate = this.config.displayRate;
         this.currencies = this.config.currencies ? this.config.currencies : [];
         this.fromCurrency = this.currencies.length > 0 ? this.currencies[0] : {};
@@ -201,8 +203,13 @@ export default {
          * Default exchange rate service provider
          */
         defaultRateExchangeService() {
+            let query = `from=${this.fromCurrency.iso}&to=${this.toCurrency.iso}`;
+            if (this.apiKey !== null && this.apiKey !== '') {
+                query += `&${this.apiKey}`;
+            }
+
             // Get rate
-            axios.get(`https://exchange.qed.services/api-v1/get-rate?from=${this.fromCurrency.iso}&to=${this.toCurrency.iso}&api_key=dc7a8020-5d3b-11e9-b9d8-ab0b41a9f1c7`)
+            axios.get(`https://exchange.qed.services/api/v1/get-rate?${query}`)
                 .then(
                     (response) => {
                         this.rate = response.data.rate;

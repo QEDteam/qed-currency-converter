@@ -44,8 +44,10 @@ Config Example
 
 ```javascript
 const config = {
-    // Application route which needs to return json with rate value ex. { rate: 1.8 }
-    // If not provided, default exchange service will be used
+    // Api key for unlimited requests per minute -> api key is not required if you use your own rate provider
+    apiKey: 'here-comes-your-api-key',
+
+    // You can override default exchange api with your own route (response example json => { rate: 1.2 })
     route:'/api/currencies/rate',
 
     // Whether rate will be displayed (true/false)
@@ -74,6 +76,11 @@ const config = {
     }
 }
 ```
+
+## API KEY
+- Api key is required only if you wish to use predefined api exchange rate provider with unlimited requests per minute
+- This way all you have to do is set up list of currencies you wish to use on your site
+- Api key is also free and can be obtained here -> https://exchange.qed.services
 
 ## License
 
