@@ -178,6 +178,12 @@ export default {
         getRate() {
             this.fromAmount = null;
 
+            // Do not use live rate if from and to are the samo currencies
+            if (this.fromCurrency.iso === this.toCurrency.iso) {
+                this.rate = 1;
+                return;
+            }
+
             // Return with default rate if route is not provided
             if (this.route == null || this.route == '') {
                 this.defaultRateExchangeService();
